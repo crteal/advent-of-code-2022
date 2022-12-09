@@ -22,7 +22,7 @@
 
 (define (score-match s1 s2)
   (let ([s1-shape-score (cdr (assq s1 shape-scores))]
-	[s2-shape-score (cdr (assq s2 shape-scores))])
+        [s2-shape-score (cdr (assq s2 shape-scores))])
     (cond
       [(equal? s1 s2) (list (+ 3 s1-shape-score) (+ 3 s2-shape-score))]
       [(beats? s1 s2) (list (+ 6 s1-shape-score) s2-shape-score)]
@@ -31,17 +31,17 @@
 (define (part-one)
   (let ([p (open-input-file "./input/2.txt")])
     (let loop ([score 0]
-	       [line (get-line p)])
+               [line (get-line p)])
       (if (eof-object? line)
-	(begin
-	  (close-input-port p)
-	  score)
-	(let* ([parts (string->list line)]
+        (begin
+          (close-input-port p)
+          score)
+        (let* ([parts (string->list line)]
                [my-move (cdr (assq (caddr parts) my-strategy))]
-	       [opponent-move (cdr (assq (car parts) opponent-strategy))]
-	       [match-score (score-match my-move opponent-move)])
-	  (loop (+ score (car match-score))
-		(get-line p)))))))
+               [opponent-move (cdr (assq (car parts) opponent-strategy))]
+               [match-score (score-match my-move opponent-move)])
+          (loop (+ score (car match-score))
+                (get-line p)))))))
 
 ; (printf "~a\n" (part-one))
 
@@ -66,17 +66,17 @@
 (define (part-two)
   (let ([p (open-input-file "./input/2.txt")])
     (let loop ([score 0]
-	       [line (get-line p)])
+               [line (get-line p)])
       (if (eof-object? line)
-	(begin
-	  (close-input-port p)
-	  score)
-	(let* ([parts (string->list line)]
-	       [opponent-move (cdr (assq (car parts) opponent-strategy))]
-	       [my-move (shape-by-goal (car (assq (caddr parts) my-strategy))
-				       opponent-move)]
-	       [match-score (score-match my-move opponent-move)])
-	  (loop (+ score (car match-score))
-		(get-line p)))))))
+        (begin
+          (close-input-port p)
+          score)
+        (let* ([parts (string->list line)]
+               [opponent-move (cdr (assq (car parts) opponent-strategy))]
+               [my-move (shape-by-goal (car (assq (caddr parts) my-strategy))
+                                       opponent-move)]
+               [match-score (score-match my-move opponent-move)])
+          (loop (+ score (car match-score))
+                (get-line p)))))))
 
 (printf "~a\n" (part-two))
